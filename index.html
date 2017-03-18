@@ -83,7 +83,91 @@
     </div>
   <script type="text/javascript">
 
-    
+    var wordToGuess = '';
+    var guessesLeft = 0;
+    var alreadyGuessedLetters = [];
+
+    function createGame() {
+      document.querySelector('#start-game').classList.add('d-none');
+      document.querySelector('#play-game').classList.remove('d-none');
+      wordToGuess = document.querySelector('#word').value;
+      guessesLeft = document.querySelector('#number-of-guesses').value;
+      document.querySelector('#remaining-guesses').innerHTML = guessesLeft;
+      var wordSquares = document.querySelector('#word-squares');
+      for (var i = 0; i < wordToGuess.length; i++) {
+        var square = document.createElement('div');
+        square.classList.add('letter-box');
+        square.innerHTML = '*';
+        wordSquares.appendChild(square);
+      }
+    }
+
+    function handleGuess(input) {
+      var guess = input.value;
+      if (!alreadyGuessedLetters.includes(guess)) {
+        var positions = findPositions(guess);
+        if (positions.length) {
+          populateCorrectGuesses(positions, guess);
+        } else {
+          recordIncorrectGuess();
+        }
+        recordGuess(guess);
+        if (checkForWinner()) {
+          document.querySelector('#winner').classList.remove('d-none');
+        } else if (guessesLeft === 0) {
+          document.querySelector('#loser').classList.remove('d-none');
+        }
+      }
+      input.value = '';
+    }
+
+    function findPositions(guess) {
+      var positions = [];
+      for (var i = 0; i < wordToGuess.length; i++) {
+        if (wordToGuess[i] === guess){
+          positions.push(i);
+        }
+      }
+      return positions;
+    }
+
+    function populateCorrectGuesses(positions, guess) {
+      var wordSquares = document.querySelectorAll('.letter-box');
+      for (var i = 0; i < positions.length; i++) {
+        wordSquares[positions[i]].innerHTML = guess;
+      }
+    }
+
+    function recordIncorrectGuess() {
+      guessesLeft -= 1;
+      document.querySelector('#remaining-guesses').innerHTML = guessesLeft;
+    }
+
+    function checkForWinner() {
+      var wordSquares = document.querySelectorAll('.letter-box');
+      for (var i = 0; i < wordSquares.length; i++) {
+        if (wordSquares[i].innerHTML === '*') {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function recordGuess(guess) {
+      var guessBox = document.createElement('div');
+      guessBox.classList.add('guess-box');
+      guessBox.innerHTML = guess;
+      document.querySelector('#guesses').appendChild(guessBox)
+    }
+
+    function resetGame(result) {
+      document.querySelector('#winner').classList.add('d-none');
+      document.querySelector('#loser').classList.add('d-none');
+      document.querySelector('#play-game').classList.add('d-none');
+      document.querySelector('#start-game').classList.remove('d-none');
+      document.querySelector('#word-squares').innerHTML = '';
+      document.querySelector('#guesses').innerHTML = '';
+    }
   </script>
   </body>
 </html>
