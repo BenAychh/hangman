@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hangman Clone</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <style>
+      .guess-box {
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        margin-right: 7px;
+        position: relative;
+        text-align: center;
+        font-size: 20px;
+      }
+      .letter-box {
+        border-bottom: 1px solid black;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        margin-right: 10px;
+        position: relative;
+        text-align: center;
+        font-size: 25px;
+      }
+      .center-page {
+        left: 50%;
+        top: 50%;
+        width: 300px;
+        height: 200px;
+        margin-left: -150px;
+        margin-top: -100px;
+        position: absolute;
+        text-align: center;
+      }
+      .center-page > div {
+        font-size: 30px;
+        padding: 10px;
+      }
+      #play-game {
+        text-align: center;
+        margin-top: 30px;
+      }
+      #winner {
+        background-color: #009933;
+        border: 1px solid #003300;
+      }
+      #loser {
+        background-color: #ff3300;
+        border: 1px solid #cc3300;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="start-game" class="center-page">
+      <input class="form-control" type="text" id="word" placeholder="Word">
+      <input class="form-control" type="number" id="number-of-guesses" placeholder="Guesses">
+      <button class="btn btn-primary" onclick="createGame()">Create Game</button>
+    </div>
+    <div id="play-game" class="container d-none">
+      <div class="row justify-content-md-center" id="word-squares">
+      </div>
+      <br>
+      <div class="row justify-content-md-center">
+        <input class="form-control" onkeyup="handleGuess(this)" placeholder="Guess Here">
+      </div>
+      <br>
+      <div class="row justify-content-md-center">
+        Incorrect guesses left:&nbsp;<span id="remaining-guesses"></span>
+      </div>
+      <br>
+      <div class="row" id="guesses">
+      </div>
+    </div>
+    <div id="winner" class="d-none center-page">
+      <div>You win!!!</div>
+      <button class="btn btn-outline-secondary" onclick="resetGame(this)">Play Again</button>
+    </div>
+    <div id="loser" class="d-none center-page">
+      <div>You lose!!!</div>
+      <button class="btn btn-outline-secondary" onclick="resetGame(this)">Play Again</button>
+    </div>
+  <script type="text/javascript">
+
+    
+  </script>
+  </body>
+</html>
